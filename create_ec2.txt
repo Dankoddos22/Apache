@@ -1,0 +1,9 @@
+#cerate instances
+aws ec2 run-instances --image-id  ami-059605165f90c4f35 --instance-type t2.micro --count 1 --security-group-ids sg-0e6a802e7fad4142e --key-name danko-key-Ohio --user-data file://apach.txt --tag-specifications 'ResourceType=instance,Tags=[{Key=Role,Value=Web}]' 'ResourceType=volume,Tags=[{Key=spead,Value=slow}]'
+
+# get instances_id by filter tag value "Web2"
+aws ec2 describe-instances --filters Name=tag-value,Values=Web2 --query Reservations[*].Instances[*].[InstanceId] --output text
+
+#create imge by instances_id
+aws ec2 create-image --instance-id i-06ba7c5dd60e361ac --name "MyApachServerAMI" --description "Create Apach Server with my html"
+
